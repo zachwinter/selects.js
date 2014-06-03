@@ -7,11 +7,11 @@ Replace default browser behavior for `<select>` elements with a modern, stylable
 
 **Features:**
 
-* Stylable
-* Full Keyboard Controls
+* Full keyboard controls
 * Ability to replace default mobile &lt;select> behavior
-* CSS3 Animations (jQuery Fallback)
-* Customizable Proxy Markup
+* CSS3 animations (jQuery fallback)
+* Customizable proxy markup
+* Honeypot option for proper tab indexing
 
 **Browser Support:**
 
