@@ -3,7 +3,7 @@ selects.js
 
 Cross-Browser &lt;select> Styling
 
-Replace default browser behavior for &lt;select> elements with a modern, stylable animated dropdown interface.
+Replace default browser behavior for `&lt;select>` elements with a modern, stylable animated dropdown interface.
 
 **Features:**
 
@@ -27,7 +27,7 @@ Replace default browser behavior for &lt;select> elements with a modern, stylabl
 Setup
 -----
 
-Plugin accepts &lt;form> elements, single or multiple. Plugin parameters (and defaults) are as follows:
+Plugin accepts `&lt;form>` elements, single or multiple. Plugin parameters (and defaults) are as follows:
 
 `overrideMobileBehavior : false, // "True" will replace mobile <select> behavior.`
 `useCssTransitions      : true,  // "False" will use jQuery animation for dropdowns.` 
@@ -40,7 +40,7 @@ Plugin accepts &lt;form> elements, single or multiple. Plugin parameters (and de
 ` honeyPot : $('.hp')`
 `}`
 
-&lt;elect> elements you wish to style must be wrapped in a proxy element. As demonstrated above, you can choose to use any proxy you'd like.  
+`&lt;elect>` elements you wish to style must be wrapped in a proxy element. As demonstrated above, you can choose to use any proxy you'd like.  
 
 `<div data-form-element="select">`
 ` <select>`
