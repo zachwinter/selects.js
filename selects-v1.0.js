@@ -54,7 +54,7 @@ $.fn.selects = function(_args) {
 	/* If desired, check CSS Transition support; use Modernizr if available.
 	----------------------------------------------------------------------- */
 	if (_o.useCssTransitions === true) {
-		if (typeof Modernizr !== undefined && typeof Modernizr.csstransitions !== undefined) {
+		if (typeof(Modernizr) != 'undefined' && typeof(Modernizr.csstransitions) != 'undefined') {
 			_support = Modernizr.csstransitions;
 		} else {
 			var a = document.createElement("div").style,
