@@ -48,9 +48,9 @@ proxy : {
 ```
 <div data-form-element="select">
   <select>
-  <option value="01">Option 01</option>
-  <option value="02">Option 02</option>
-  <option value="03">Option 03</option>
+    <option value="01">Option 01</option>
+    <option value="02">Option 02</option>
+    <option value="03">Option 03</option>
   </select>
 </div>
 ```
