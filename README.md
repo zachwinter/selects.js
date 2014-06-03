@@ -5,8 +5,6 @@ Cross-Browser `<select>` Styling
 
 Replace default browser behavior for `<select>` elements with a modern, stylable animated dropdown interface.
 
-[Demo](http://zachwinter.com/selects.js/)
-
 **Features:**
 
 * Full keyboard controls
