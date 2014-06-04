@@ -1,6 +1,6 @@
 /* 
  *
- * selects.js v1.0 (c) 2014
+ * selects.js v1.1 (c) 2014
  * Cross-Browser <select> Styling 
  * 
  * @author  : Zach Winter (contact@zachwinter.com)
@@ -34,7 +34,7 @@ $.fn.selects = function(_args) {
 				40 : false  // Down 
 			},
 
-	    _defaults = {
+			_defaults = {
 				overrideMobileBehavior : false, // "True" will replace mobile <select> behavior. 
 				useCssTransitions      : true,  // "False" will use jQuery animation for dropdowns.
 				slideSpeed             : 300,   // Speed of dropdown animations.
@@ -133,6 +133,10 @@ $.fn.selects = function(_args) {
 			// Namespacing.   EX: '.form0element1'
 			self.namespace = '.form' + self.form + 'element' + $('[data-marker="form-element"]').index(self.select);
 
+			// Add namespacing attribute so external scripts can use events. 
+			self.select.attr('data-namespace', self.namespace);
+
+			// Default select proxy styling.
 			self.proxy.css('position', 'relative');
 
 			// Default <select> styling.

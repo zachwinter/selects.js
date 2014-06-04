@@ -55,6 +55,11 @@ proxy : {
 </div>
 ```
 
+Changelog
+---------
+v1.1 - Added data-attribute to `<select>` elements containing the element's event namespacing. This allows for `$('select').on('change' + namespace, function(){ /* ~ fun ~ */ });`
+
+
 
 
 
