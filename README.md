@@ -57,7 +57,13 @@ proxy : {
 
 Changelog
 ---------
-v1.1 - Added data-attribute to `<select>` elements containing the element's event namespacing. This allows for `$('select').on('change' + namespace, function(){ /* ~ fun ~ */ });`
+**v1.1** - Added data-attribute to `<select>` elements that contains the element's event namespacing. For convenience, the first character is always a period.
+
+```
+var namespace = $('select').attr('data-namespace');
+
+$('select').on('change' + namespace, function(){});
+```
 
 
 
