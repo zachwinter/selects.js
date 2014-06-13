@@ -59,7 +59,7 @@ Changelog
 ---------
 **v1.1** - Added data-attribute to `<select>` elements that contains the element's event namespacing. For convenience, the first character is always a period.
 
-```
+```javascript
 var namespace = $('select').attr('data-namespace');
 
 $('select').on('change' + namespace, function(){});
