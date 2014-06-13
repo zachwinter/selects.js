@@ -62,7 +62,9 @@ Changelog
 ```javascript
 var namespace = $('select').attr('data-namespace');
 
-$('select').on('change' + namespace, function(){});
+$('select').on('change' + namespace, function () {
+	// Yay!
+});
 ```
 
 
