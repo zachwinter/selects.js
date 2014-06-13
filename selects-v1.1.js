@@ -620,44 +620,50 @@ $.fn.selects = function(_args) {
 	----------------------------------------------------------------------- */
 	_self.each(function() {
 
-		// Index of this form.
-		var formIndex = _self.index($(this));
+		var self = $(this);
 
-		// Create object for this form.
-		_forms[formIndex] = {
-			html     : $(this),
-			indexing : null,
-			selects  : []
-		};
+		if (self.find('select').length) {
 
-		/* Mark elements for tab indexing.
-		======================================================= */
-		_forms[formIndex].html.find('input, textarea, select, button') 
-		.not('[type="hidden"], [disabled], [type="disabled"]')
-		.attr({
-			'data-marker' : 'form-element',
-			'data-form'   : formIndex
-		});
+			// Index of this form.
+			var formIndex = _self.index(self);
 
-		// If there's a honeypot, remove the marker. 
-		if (_o.proxy.honeyPot.find('input').length) {
-			_o.proxy.honeyPot.find('input').removeAttr('data-marker');
+			// Create object for this form.
+			_forms[formIndex] = {
+				html     : $(this),
+				indexing : null,
+				selects  : []
+			};
+
+			/* Mark elements for tab indexing.
+			======================================================= */
+			_forms[formIndex].html.find('input, textarea, select, button') 
+			.not('[type="hidden"], [disabled], [type="disabled"]')
+			.attr({
+				'data-marker' : 'form-element',
+				'data-form'   : formIndex
+			});
+
+			// If there's a honeypot, remove the marker. 
+			if (_o.proxy.honeyPot.find('input').length) {
+				_o.proxy.honeyPot.find('input').removeAttr('data-marker');
+			}
+
+			// Store marked elements in array. 
+			_forms[formIndex].indexing = _forms[formIndex].html.find('[data-marker="form-element"]');
+
+			/* Select Processing
+			======================================================= */
+			_forms[formIndex].html.find(_o.proxy.select).each(function() {
+
+				var i = _o.proxy.select.index($(this));
+
+				_forms[formIndex].selects[i]       = Object.create(SELECT);
+				_forms[formIndex].selects[i].proxy = $(this);
+				_forms[formIndex].selects[i].init();
+
+			});
+			
 		}
-
-		// Store marked elements in array. 
-		_forms[formIndex].indexing = _forms[formIndex].html.find('[data-marker="form-element"]');
-
-		/* Select Processing
-		======================================================= */
-		_forms[formIndex].html.find(_o.proxy.select).each(function() {
-
-			var i = _o.proxy.select.index($(this));
-
-			_forms[formIndex].selects[i]       = Object.create(SELECT);
-			_forms[formIndex].selects[i].proxy = $(this);
-			_forms[formIndex].selects[i].init();
-
-		});
 
 	});
 

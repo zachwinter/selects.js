@@ -29,7 +29,7 @@ Setup
 
 Plugin accepts `<form>` elements, single or multiple. Plugin parameters (and defaults) are as follows:
 
-```
+```javascript
 overrideMobileBehavior : false, // "True" will replace mobile <select> behavior.
 useCssTransitions      : true,  // "False" will use jQuery animation for dropdowns.
 slideSpeed             : 300,   // Speed of dropdown animations.
@@ -45,7 +45,7 @@ proxy : {
 `<select>` elements you wish to style must be wrapped in a proxy element. As demonstrated above, you can choose to use any proxy you'd like.  
 
 
-```
+```html
 <div data-form-element="select">
   <select>
     <option value="01">Option 01</option>
