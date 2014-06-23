@@ -57,6 +57,8 @@ proxy : {
 
 Changelog
 ---------
+**v1.2** - Support for disabled `<select>` elements.
+
 **v1.1** - Added data-attribute to `<select>` elements that contains the element's event namespacing. For convenience, the first character is always a period.
 
 ```javascript

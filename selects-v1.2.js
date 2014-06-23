@@ -1,6 +1,6 @@
 /* 
  *
- * selects.js v1.1 (c) 2014
+ * selects.js v1.2 (c) 2014
  * Cross-Browser <select> Styling 
  * 
  * @author  : Zach Winter (contact@zachwinter.com)
@@ -410,8 +410,11 @@ $.fn.selects = function(_args) {
 			});
 
 			self.dropdown.find('a').on('click' + self.namespace, function() {
-				$(document).off('keydown' + self.namespace);
-				self.selectOption($(this));
+				var $clicked = $(this);
+				if ( $clicked.attr('data-disabled') !== 'disabled') {
+					$(document).off('keydown' + self.namespace);
+					self.selectOption($clicked);
+				}
 			});
 
 		},
