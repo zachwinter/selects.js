@@ -194,9 +194,10 @@ $.fn.selects = function(_args) {
 					option   : ' data-option="' + $(this).index() + '"',
 					selected : ' data-selected="' + $(this).attr('selected') + '"',
 					disabled : $(this).attr('disabled') ? ' data-disabled="disabled"' : ''
+					cursor   : $(this).attr('disabled') ? 'default' : 'pointer'
 				};
 
-				self.dropdown.append('<li><a style="display: block; cursor: pointer;" '+ data.select + data.option + data.selected + data.disabled +'>' + $(this).html() + '</a></li>');
+				self.dropdown.append('<li><a style="display: block; cursor: ' + data.cursor + ';" '+ data.select + data.option + data.selected + data.disabled +'>' + $(this).html() + '</a></li>');
 
 			});
 			
