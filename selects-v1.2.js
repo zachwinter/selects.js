@@ -190,13 +190,14 @@ $.fn.selects = function(_args) {
 			self.options.each(function() {
 
 				var data = {
-					select   : ' data-select="option"',
-					option   : ' data-option="' + $(this).index() + '"',
-					selected : ' data-selected="' + $(this).attr('selected') + '"',
-					disabled : $(this).attr('disabled') ? ' data-disabled="disabled"' : ''
+					select   : ' data-select="option" ',
+					option   : ' data-option="'   + $(this).index()          + '" ',
+					selected : ' data-selected="' + $(this).attr('selected') + '" ',
+					disabled : ' data-disabled="' + $(this).attr('disabled') + '" ',
+					cursor   : $(this).attr('disabled') ? 'default' : 'pointer'
 				};
 
-				self.dropdown.append('<li><a style="display: block; cursor: pointer;" '+ data.select + data.option + data.selected + data.disabled +'>' + $(this).html() + '</a></li>');
+				self.dropdown.append('<li><a ' + data.select + data.option + data.selected + data.disabled + 'style="display: block; cursor: ' + data.cursor + ';">' + $(this).html() + '</a></li>');
 
 			});
 			
@@ -411,7 +412,7 @@ $.fn.selects = function(_args) {
 
 			self.dropdown.find('a').on('click' + self.namespace, function() {
 				var $clicked = $(this);
-				if ( $clicked.attr('data-disabled') !== 'disabled') {
+				if ( $clicked.attr('data-disabled') !== 'true') {
 					$(document).off('keydown' + self.namespace);
 					self.selectOption($clicked);
 				}
