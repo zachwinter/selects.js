@@ -63,7 +63,7 @@ Changelog
 
 ```html
 <option data-span="Smith">Granny Smith Apples</option>
-// Above will result in:
+Above will result in:
 <li><a href="#">Granny <span>Smith</span> Apples</a></li>
 ```
 
@@ -71,7 +71,7 @@ Changelog
 
 ```html
 <option data-img="http://www.website.com/image.jpg">Granny Smith Apples</option>
-// Above will result in:
+Above will result in:
 <li><a href="#"><img src="http://www.website.com/image.jpg" alt="" />Granny Smith Apples</a></li>
 ```
 
