@@ -44,7 +44,6 @@ proxy : {
 
 `<select>` elements you wish to style must be wrapped in a proxy element. As demonstrated above, you can choose to use any proxy you'd like.  
 
-
 ```html
 <div data-form-element="select">
   <select>
@@ -55,25 +54,36 @@ proxy : {
 </div>
 ```
 
-Changelog
----------
-**v1.3**
-* You no longer need to use a namespace for events (on/trigger change).
-* You can now add `span` tags around text for more intricate styling.
+Advanced Styling
+----------------
+
+You can add `<span>` tags around text for more intricate styling.
 
 ```html
 <option data-span="Smith">Granny Smith Apples</option>
+
 Above will result in:
+
 <li><a href="#">Granny <span>Smith</span> Apples</a></li>
 ```
 
-* You can now add `<img>` tags to your `<option>` proxy elements.
+You can also add `<img>` tags to your `<option>` proxy elements.
 
 ```html
 <option data-img="http://www.website.com/image.jpg">Granny Smith Apples</option>
+
 Above will result in:
+
 <li><a href="#"><img src="http://www.website.com/image.jpg" alt="" />Granny Smith Apples</a></li>
 ```
+
+Changelog
+---------
+
+**v1.3**
+* You no longer need to use a namespace for events (on/trigger change).
+* You can now add `<span>` tags around text for more intricate styling.
+* You can now add `<img>` tags to your `<option>` proxy elements.
 
 **v1.2**
 * Support for disabled `<select>` elements.
