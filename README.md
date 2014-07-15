@@ -57,9 +57,33 @@ proxy : {
 
 Changelog
 ---------
-**v1.2** - Support for disabled `<select>` elements.
+**v1.3**
+• You no longer need to use a namespace for events (on/trigger change).
+• You can now add `span` tags around text for more intricate styling.
 
-**v1.1** - Added data-attribute to `<select>` elements that contains the element's event namespacing. For convenience, the first character is always a period.
+```html
+<option data-span="Smith">Granny Smith Apples</option>
+```
+The above will result in:
+```html
+<li><a href="#">Granny <span>Smith</span> Apples</a></li>
+```
+
+• You can now add `img` tags to your `option` proxy elements.
+
+```html
+<option data-img="http://www.website.com/image.jpg">Granny Smith Apples</option>
+```
+The above will result in:
+```html
+<li><a href="#"><img src="http://www.website.com/image.jpg" alt="" />Granny Smith Apples</a></li>
+```
+
+**v1.2**
+Support for disabled `<select>` elements.
+
+**v1.1**
+Added data-attribute to `<select>` elements that contains the element's event namespacing. For convenience, the first character is always a period.
 
 ```javascript
 var namespace = $('select').attr('data-namespace');

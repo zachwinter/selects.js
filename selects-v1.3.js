@@ -1,6 +1,6 @@
 /* 
  *
- * selects.js v1.2 (c) 2014
+ * selects.js v1.3 (c) 2014
  * Cross-Browser <select> Styling 
  * 
  * @author  : Zach Winter (contact@zachwinter.com)
@@ -22,9 +22,9 @@ $.fn.selects = function(_args) {
 	/* Global Variables
 	----------------------------------------------------------------------- */
 	var _self     = this,  // Forms passed to plugin.
-	    _forms    = [],    // Processed data.
-	    _support  = false, // CSS Transition Support
-	    _isMobile = false, // Mobile Browser Detection
+		_forms    = [],    // Processed data.
+		_support  = false, // CSS Transition Support
+		_isMobile = false, // Mobile Browser Detection
 
 			_keyMap   = {
 				9  : false, // Tab
@@ -41,24 +41,22 @@ $.fn.selects = function(_args) {
 				dropdownHeight         : 150,   // Max-height of dropdowns (px).
 
 				proxy : {
-					select   : $('[data-form-element="select"]'),
-					dropdown : $('[data-form-element="select-dropdown"]'),
-					button   : $('[data-form-element="select-button"]'),
-					honeyPot : $('.hp')
+					select   : '[data-form-element="select"]',
+					dropdown : '[data-form-element="select-dropdown"]',
+					button   : '[data-form-element="select-button"]',
+					honeyPot : '.hp'
 				}
 
 			}, _o = $.extend(_defaults, _args);
 
-
-
 	/* If desired, check CSS Transition support; use Modernizr if available.
 	----------------------------------------------------------------------- */
 	if (_o.useCssTransitions === true) {
-		if (typeof(Modernizr) != 'undefined' && typeof(Modernizr.csstransitions) != 'undefined') {
+		if (typeof(Modernizr) !== 'undefined' && typeof(Modernizr.csstransitions) !== 'undefined') {
 			_support = Modernizr.csstransitions;
 		} else {
 			var a = document.createElement("div").style,
-			    b = [ a.transition, a.WebkitTransition, a.MozTransition ];
+				b = [ a.transition, a.WebkitTransition, a.MozTransition ];
 			for (var i=0; i<b.length; i++) if (b[i] !== undefined) _support = true;
 		}
 	}
@@ -84,7 +82,7 @@ $.fn.selects = function(_args) {
 		Object.create = (function() {
 			function F(){}
 			return function(o) {
-				if (arguments.length != 1) throw new Error('Object.create implementation only accepts one parameter.');
+				if (arguments.length !== 1) throw new Error('Object.create implementation only accepts one parameter.');
 				F.prototype = o;
 				return new F();
 			};
@@ -123,11 +121,11 @@ $.fn.selects = function(_args) {
 			self.proxy.prepend('<a data-form-element="select-button" />');
 					
 			// Store elements.
-			self.form        = self.proxy.find('select').attr('data-form'),
-			self.select      = self.proxy.find('select'),
-			self.options     = self.proxy.find('option'),
-			self.dropdown    = self.proxy.find(_o.proxy.dropdown.selector),
-			self.button      = self.proxy.find(_o.proxy.button.selector),
+			self.form        = self.proxy.find('select').attr('data-form');
+			self.select      = self.proxy.find('select');
+			self.options     = self.proxy.find('option');
+			self.dropdown    = self.proxy.find(_o.proxy.dropdown);
+			self.button      = self.proxy.find(_o.proxy.button);
 			self.selected    = self.proxy.find(':selected');
 
 			// Namespacing.   EX: '.form0element1'
@@ -189,22 +187,38 @@ $.fn.selects = function(_args) {
 			// Create list item in dropdown for every <option> element.
 			self.options.each(function() {
 
-				var data = {
+				var _ = {
 					select   : ' data-select="option" ',
 					option   : ' data-option="'   + $(this).index()          + '" ',
 					selected : ' data-selected="' + $(this).attr('selected') + '" ',
 					disabled : ' data-disabled="' + $(this).attr('disabled') + '" ',
-					cursor   : $(this).attr('disabled') ? 'default' : 'pointer'
+					cursor   : $(this).attr('disabled')   ? 'default' : 'pointer',
+					image    : $(this).attr('data-image') ? '<img src="' + $(this).attr('data-image') + '" alt="" />' : '',
+					span     : $(this).attr('data-span')  ? $(this).attr('data-span') : null,
+					html     : $(this).html()
 				};
 
-				self.dropdown.append('<li><a ' + data.select + data.option + data.selected + data.disabled + 'style="display: block; cursor: ' + data.cursor + ';">' + $(this).html() + '</a></li>');
+				if ( _.span !== null ) {
+					_.html = _.html.replace( _.span, function (m) {
+						return '<span class="style">' + m + '</span>';
+					});
+				}
+
+				if ( _.image !== '' ) {
+					_.html = _.html.replace( _.html, function (m) {
+						return '<span class="text">' + m + '</span>';
+					});
+				}
+
+				self.dropdown.append('<li><a ' + _.select + _.option + _.selected + _.disabled + 'style="display: block; cursor: ' + _.cursor + ';">' + _.image + _.html + '</a></li>');
 
 			});
 			
 			// If one of the <option> elements is selected, use it.
 			if (self.selected.length) {
-				self.button.html(self.selected.html());
-				self.dropdown.find('li:eq(' + self.selected.index() + ') a').addClass('focus');
+				var $el = self.dropdown.find('li:eq(' + self.selected.index() + ') a');
+				self.button.html( $el.html() );
+				$el.addClass('focus');
 			}
 
 			// Otherwise, use the first <option> element.
@@ -230,6 +244,11 @@ $.fn.selects = function(_args) {
 				});
 			}
 
+			// When <select> changes, update proxy.
+			self.select.on('change', function() {
+				self.updateProxy( self.options.filter(':selected').index() );
+			});
+
 		},
 
 
@@ -254,7 +273,7 @@ $.fn.selects = function(_args) {
 				// If we don't already have the height stored...
 				if (!self.dropdown.attr('data-height')) {
  
-	 				// Clone dropdown.
+					// Clone dropdown.
 					var clone = self.dropdown.clone();
 
 					// Have it 'visible' but off-screen.
@@ -305,6 +324,7 @@ $.fn.selects = function(_args) {
 				if (_o.useCssTransitions === true && _support === true) {
 
 					self.dropdown.css({
+						'display' : 'block',
 						'z-index' : '10',
 						'height'  : determineHeight
 					});
@@ -337,8 +357,11 @@ $.fn.selects = function(_args) {
 				if (_o.useCssTransitions === true && _support === true) {
 					self.dropdown.on('transitionend' + self.namespace + ' webkitTransitionEnd' + self.namespace, function(){
 						self.dropdown.off('transitionend' + self.namespace + ' webkitTransitionEnd' + self.namespace);
-						self.dropdown.css('z-index', 'auto');
-					}).css('height', '0');
+						self.dropdown.css({
+							'z-index' : 'auto',
+							'display' : 'none'
+						});
+					}).css('height', '0'); 
 				}
 
 				// jQuery Animation
@@ -368,27 +391,41 @@ $.fn.selects = function(_args) {
 			var self = this;
 
 			// If option proxy isn't already selected...
-			if ($optionProxy.attr('data-selected') == 'undefined') {
+			if ( $optionProxy.attr('data-selected') === 'undefined' ) {
 
-				// Blur active option proxy in dropdown; focus new proxy.
-				self.dropdown.find('.focus').removeClass('focus');
-				$optionProxy.addClass('focus');
-
-				// Unselect current option proxy; select new proxy.
-				self.dropdown.find('[data-selected="selected"]').attr('data-selected', 'undefined');
-				$optionProxy.attr('data-selected', 'selected');
-
-				// Update button text with option proxy text.
-				self.button.html($optionProxy.html());
+				var index = $optionProxy.attr('data-option');
 
 				// Unselect current <option>; select new <option>.
 				self.options.prop('selected', false).removeAttr('selected');
-				self.options.eq( $optionProxy.attr('data-option') ).prop('selected', true).attr('selected', 'selected');
+				self.options.eq(index).prop('selected', true).attr('selected', 'selected');
 
 				// Trigger change event on <select> due to changing value programatically. 
-				self.select.trigger('change' + self.namespace);
+				self.select.trigger('change');
 
 			}
+
+		},
+
+
+
+		/* Update Proxy
+		======================================================= */
+		updateProxy : function(index) {
+
+			var self = this;
+
+			var $optionProxy = self.dropdown.find('[data-option="' + index + '"]');
+
+			// Blur active option proxy in dropdown; focus new proxy.
+			self.dropdown.find('.focus').removeClass('focus');
+			$optionProxy.addClass('focus');
+
+			// Unselect current option proxy; select new proxy.
+			self.dropdown.find('[data-selected="selected"]').attr('data-selected', 'undefined');
+			$optionProxy.attr('data-selected', 'selected');
+
+			// Update button text with option proxy text.
+			self.button.html($optionProxy.html());
 
 		},
 
@@ -400,19 +437,23 @@ $.fn.selects = function(_args) {
 
 			var self = this; 
 
-			self.button.on('click' + self.namespace, function(e) { 
-				if (_o.overrideMobileBehavior === false && _isMobile === true) {
-					e.preventDefault();
-				} else {
-					if (_isMobile === false) self.keyBind(self.proxy);
-					self.toggleDropdown();
-					self.proxy.addClass('focus');
+			self.button.on('click' + self.namespace, function (e) { 
+
+				if ( !self.select.attr('disabled') ) {
+					if (_o.overrideMobileBehavior === false && _isMobile === true) {
+						e.preventDefault();
+					} else {
+						if (_isMobile === false) self.keyBind(self.proxy);
+						self.toggleDropdown();
+						self.proxy.addClass('focus');
+					}
 				}
+
 			});
 
-			self.dropdown.find('a').on('click' + self.namespace, function() {
+			self.dropdown.find('a').on('click' + self.namespace, function () {
 				var $clicked = $(this);
-				if ( $clicked.attr('data-disabled') !== 'true') {
+				if ( $clicked.attr('data-disabled') !== 'true' ) {
 					$(document).off('keydown' + self.namespace);
 					self.selectOption($clicked);
 				}
@@ -440,14 +481,14 @@ $.fn.selects = function(_args) {
 
 			self.KV.focused = self.dropdown.find('.focus');
 			self.KV.index   = parseInt(self.KV.focused.attr('data-option'));
-			self.KV.index   = (direction == "next") ? self.KV.index + 1 : self.KV.index - 1;
+			self.KV.index   = (direction === "next") ? self.KV.index + 1 : self.KV.index - 1;
 			self.KV.focused.removeClass('focus');
 			self.KV.focused = self.dropdown.find('[data-option="' + self.KV.index + '"]').addClass('focus');
 			if (!self.dropdown.hasClass('vis')) {
 				self.selectOption(self.dropdown.find('[data-option="' + self.KV.index + '"]'));
 				self.updateScrollTop(true);
 			} else {
-				self.updateScrollTop();
+				self.updateScrollTop(); 
 			}
  
 		},
@@ -565,16 +606,21 @@ $.fn.selects = function(_args) {
 
 		/* Focus New Element
 		======================================================= */
-		focusNewElement : function(direction) {
+		focusNewElement : function() {
 
-			var self = this, direction = null;
+			var self      = this,
+				direction = null;
 
 			// If Shift+Tab are being pressed, go backwards. Otherwise, go forwards.
-			_keyMap[9] === true && _keyMap[16] === true ? direction = -1 : direction = 1;
+			if ( _keyMap[9] === true && _keyMap[16] === true ) {
+				direction = -1;
+			} else {
+				direction = 1;
+			}
 			
 			// Find new element.
 			var index = _forms[self.form].indexing.index(self.select) + direction,
-			    $next = _forms[self.form].indexing.eq(index);
+				$next = _forms[self.form].indexing.eq(index);
 
 			// Remove focus from current element.
 			self.proxy.removeClass('focus');
@@ -618,25 +664,22 @@ $.fn.selects = function(_args) {
 		if (allDropdowns.attr('data-height')) allDropdowns.removeAttr('data-height');
 	});
 
-
-
 	/* In each form passed to plugin...
 	----------------------------------------------------------------------- */
-	_self.each(function() {
+	_self.each(function () {
 
 		var self = $(this);
 
 		if (self.find('select').length) {
 
-			// Index of this form.
-			var formIndex = _self.index(self);
-
 			// Create object for this form.
-			_forms[formIndex] = {
-				html     : $(this),
+			_forms.push({
+				html     : self,
 				indexing : null,
 				selects  : []
-			};
+			});
+
+			var formIndex = _forms.length - 1;
 
 			/* Mark elements for tab indexing.
 			======================================================= */
@@ -648,7 +691,7 @@ $.fn.selects = function(_args) {
 			});
 
 			// If there's a honeypot, remove the marker. 
-			if (_o.proxy.honeyPot.find('input').length) {
+			if ( typeof( $(_o.proxy.honeyPot) ) !== 'undefined' && $(_o.proxy.honeyPot).find('input').length) {
 				_o.proxy.honeyPot.find('input').removeAttr('data-marker');
 			}
 
@@ -657,9 +700,7 @@ $.fn.selects = function(_args) {
 
 			/* Select Processing
 			======================================================= */
-			_forms[formIndex].html.find(_o.proxy.select).each(function() {
-
-				var i = _o.proxy.select.index($(this));
+			_forms[formIndex].html.find( _o.proxy.select ).each(function(i) {
 
 				_forms[formIndex].selects[i]       = Object.create(SELECT);
 				_forms[formIndex].selects[i].proxy = $(this);
