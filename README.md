@@ -63,19 +63,15 @@ Changelog
 
 ```html
 <option data-span="Smith">Granny Smith Apples</option>
-```
-The above will result in:
-```html
+&#8595;
 <li><a href="#">Granny <span>Smith</span> Apples</a></li>
 ```
 
-* You can now add `img` tags to your `option` proxy elements.
+* You can now add `<img>` tags to your `<option>` proxy elements.
 
 ```html
 <option data-img="http://www.website.com/image.jpg">Granny Smith Apples</option>
-```
-The above will result in:
-```html
+&#8595;
 <li><a href="#"><img src="http://www.website.com/image.jpg" alt="" />Granny Smith Apples</a></li>
 ```
 
