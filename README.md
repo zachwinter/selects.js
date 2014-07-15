@@ -83,7 +83,8 @@ Changelog
 **v1.3**
 * You no longer need to use a namespace for events (on/trigger change).
 * You can now add `<span>` tags around text for more intricate styling.
-* You can now add `<img>` tags to your `<option>` proxy elements.
+* You can now add an `<img>` element to `<option>` proxy elements.
+* Fixed issue with using custom proxy elements.
 
 **v1.2**
 * Support for disabled `<select>` elements.

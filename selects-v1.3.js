@@ -21,33 +21,36 @@ $.fn.selects = function(_args) {
 
 	/* Global Variables
 	----------------------------------------------------------------------- */
-	var _self     = this,  // Forms passed to plugin.
+	var _self   = this,  // Forms passed to plugin.
 		_forms    = [],    // Processed data.
 		_support  = false, // CSS Transition Support
-		_isMobile = false, // Mobile Browser Detection
+		_isMobile = false; // Mobile Browser Detection
 
-			_keyMap   = {
-				9  : false, // Tab
-				13 : false, // Enter
-				16 : false, // Shift
-				38 : false, // Up
-				40 : false  // Down 
-			},
+	var _keyMap = {
+		9  : false, // Tab
+		13 : false, // Enter
+		16 : false, // Shift
+		38 : false, // Up
+		40 : false  // Down 
+	};
 
-			_defaults = {
-				overrideMobileBehavior : false, // "True" will replace mobile <select> behavior. 
-				useCssTransitions      : true,  // "False" will use jQuery animation for dropdowns.
-				slideSpeed             : 300,   // Speed of dropdown animations.
-				dropdownHeight         : 150,   // Max-height of dropdowns (px).
+	var _defaults = {
+		overrideMobileBehavior : false, // "True" will replace mobile <select> behavior. 
+		useCssTransitions      : true,  // "False" will use jQuery animation for dropdowns.
+		slideSpeed             : 300,   // Speed of dropdown animations.
+		dropdownHeight         : 150,   // Max-height of dropdowns (px).
+		
+		proxy : {
+			select   : '[data-form-element="select"]',
+			dropdown : '[data-form-element="select-dropdown"]',
+			button   : '[data-form-element="select-button"]',
+			honeyPot : '.hp'
+		}
+	};
 
-				proxy : {
-					select   : '[data-form-element="select"]',
-					dropdown : '[data-form-element="select-dropdown"]',
-					button   : '[data-form-element="select-button"]',
-					honeyPot : '.hp'
-				}
+	_defaults.proxy = $.extend( _defaults.proxy, _args.proxy);
 
-			}, _o = $.extend(_defaults, _args);
+	var _o = $.extend( _defaults, _args );
 
 	/* If desired, check CSS Transition support; use Modernizr if available.
 	----------------------------------------------------------------------- */
